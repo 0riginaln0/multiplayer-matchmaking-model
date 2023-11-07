@@ -12,6 +12,8 @@ var processing_time
 func _init(id: int) -> void:
 	player_id = id
 	creation_time = Time.get_datetime_string_from_system()
+	request_id = max_request_id
+	max_request_id += 1
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,10 +22,3 @@ func _ready() -> void:
 func _to_string() -> String:
 	return str("Request: ", request_id, " by player: ", player_id, "\n", creation_time)
 
-func create_request():
-	request_id = max_request_id
-	max_request_id += 1
-	pass
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
