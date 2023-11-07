@@ -27,6 +27,6 @@ func get_current_request() -> Request:
 	return request
 
 func _on_request_handled():
-	print(str("I am player:", player_id,". And I my request has been handled\n", request))
+	print(str("I am player:", player_id,". And my request has been handled\n", request, "\n"))
 	request.disconnect("request_handled", _on_request_handled)
 	pass

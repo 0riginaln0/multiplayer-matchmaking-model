@@ -20,9 +20,11 @@ func _ready() -> void:
 	var player4 = Player.new()
 	player4.create_new_request()
 	var player5 = Player.new()
-	print(player5)
+	player5.create_new_request()
+	#print(player5)
 	var player6 = Player.new()
-	print(player6)
+	player6.create_new_request()
+	#print(player6)
 	var player7 = Player.new()
 	player7.create_new_request()
 	
