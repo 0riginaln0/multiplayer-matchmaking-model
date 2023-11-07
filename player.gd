@@ -30,6 +30,3 @@ func _on_request_handled():
 	print(str("I am player:", player_id,". And I my request has been handled\n", request))
 	request.disconnect("request_handled", _on_request_handled)
 	pass
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
