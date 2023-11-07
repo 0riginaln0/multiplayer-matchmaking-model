@@ -20,10 +20,16 @@ func _to_string() -> String:
 
 func create_new_request():
 	request = Request.new(player_id)
+	request.connect("request_handled", _on_request_handled)
 	pass
 
-func get_current_request():
+func get_current_request() -> Request:
 	return request
+
+func _on_request_handled():
+	print(str("I am player:", player_id,". And I my request has been handled\n", request))
+	request.disconnect("request_handled", _on_request_handled)
+	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 #	pass
