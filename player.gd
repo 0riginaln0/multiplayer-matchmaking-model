@@ -4,6 +4,7 @@ extends Node
 static var max_player_id: int = 0
 
 var player_id: int
+var request: Request = null
 
 func _init() -> void:
 	player_id = max_player_id
@@ -16,8 +17,13 @@ func _ready() -> void:
 func _to_string() -> String:
 	return str("Player:", player_id)
 
-func create_request():
+func create_new_request():
+	request = Request.new(player_id)
+	request.create_request()
 	pass
+	
+func get_current_request():
+	return request
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 #	pass
