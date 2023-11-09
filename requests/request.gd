@@ -1,5 +1,5 @@
 class_name Request
-extends Node
+extends RefCounted
 
 signal request_handled
 
@@ -25,11 +25,12 @@ func _to_string() -> String:
 	return str("Request: ", request_id," by player: ", player_id,
 	"\n", creation_time, "\n", end_time, "\n", processing_time)
 
-func set_handled():
+func set_handled() -> void:
 	end_time = Time.get_datetime_string_from_system()
 	var t_start = Time.get_unix_time_from_datetime_string(creation_time)
 	var t_end = Time.get_unix_time_from_datetime_string(end_time)
 	processing_time = str((t_end - t_start))
 	emit_signal("request_handled")
-	pass	
 
+func get_creation_time() -> String:
+	return creation_time

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b23b6b1di22gg"]
-
-[ext_resource type="Script" path="res://player.gd" id="1_vot0m"]
-
-[node name="Player" type="Node"]
-script = ExtResource("1_vot0m")

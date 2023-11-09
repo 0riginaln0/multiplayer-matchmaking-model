@@ -1,0 +1,15 @@
+class_name Buffer1
+extends Resource
+
+static var buffer: Array[Request]
+
+func are_enough_requests() -> bool:
+	if buffer.size() >= GlobalVariables.PLAYERS_IN_MATCH:
+		return true
+	return false
+
+func append(req: Request):
+	buffer.append(req)
+
+func pop_front() -> Request:
+	return buffer.pop_front()
