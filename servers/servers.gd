@@ -22,7 +22,7 @@ func put_in_server(_players: AggregatedRequest):
 	servers[serv_id].players = _players
 	servers[serv_id].status = ServerState.BUSY
 	servers[serv_id].run()
-	
+
 
 class Server:
 	extends Resource

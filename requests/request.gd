@@ -11,12 +11,12 @@ var creation_time: String
 var end_time: String
 var processing_time: String
 
-func _init(id: int) -> void:
+func _init(id: int, time: String) -> void:
 	player_id = id
-	creation_time = Time.get_datetime_string_from_system()
+	creation_time = time #Time.get_datetime_string_from_system()
 	request_id = max_request_id
 	max_request_id += 1
-	
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

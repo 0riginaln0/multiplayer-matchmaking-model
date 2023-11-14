@@ -3,3 +3,5 @@ extends Node
 var PLAYERS_IN_MATCH: int = 4
 var SERVERS_COUNT: int = 2
 var PLAYERS_COUNT: int = 100
+var SIMULATION_START_TIME: String = "2023-11-14T19:46:19"
+var SIMULATION_END_TIME: String = "2024-01-14T19:46:19"
