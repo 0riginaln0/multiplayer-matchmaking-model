@@ -16,7 +16,7 @@ func find_free_server() -> int:
 		if server.status == ServerState.FREE:
 			return server.server_id
 	return -1
-	
+
 func put_in_server(_players: AggregatedRequest):
 	var serv_id = find_free_server()
 	servers[serv_id].players = _players

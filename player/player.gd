@@ -7,10 +7,12 @@ var player_id: int
 var request: Request = null
 var requests: Array[Request]
 
+var calendar: Calendar
 
 func _init() -> void:
 	player_id = max_player_id
 	max_player_id += 1
+	calendar = Calendar.new()
 
 
 func _to_string() -> String:
@@ -19,9 +21,14 @@ func _to_string() -> String:
 func create_new_request() -> void:
 	if request != null:
 		requests.append(request)
-	request = Request.new(player_id, calculate_next_request_time())
+	var next_request_time = calculate_next_request_time()
+	request = Request.new(player_id, next_request_time)
 	request.connect("request_handled", _on_request_handled)
-	pass
+	var new_request: SpecialEvent = SpecialEvent.new(
+		next_request_time, SpecialEvent.EVENT_TYPE.NEW_REQUEST, 
+		SpecialEvent.EVENT_STATUS.UNHANDLED, request)
+	calendar.append(new_request)
+	
 
 func calculate_next_request_time() -> String:
 	if request == null:
@@ -40,3 +47,4 @@ func get_current_request() -> Request:
 func _on_request_handled() -> void:
 	print(str("I am player:", player_id,". And my request has been handled\n", request, "\n"))
 	request.disconnect("request_handled", _on_request_handled)
+	create_new_request()
