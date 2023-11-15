@@ -53,3 +53,11 @@ func get_avg_wait_time():
 	for r in requests:
 		sum_wait_time += Time.get_unix_time_from_datetime_string(r.waiting_time)
 	return sum_wait_time / requests.size()
+
+func get_b2_avg_wait_time():
+	var sum_b2_wait_time := 0.0
+	for r in requests:
+		var t_start = Time.get_unix_time_from_datetime_string(r.b2_waiting_start_time)
+		var t_end = Time.get_unix_time_from_datetime_string(r.match_start_time)
+		sum_b2_wait_time += (t_end - t_start)
+	return sum_b2_wait_time

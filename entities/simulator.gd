@@ -49,6 +49,7 @@ func start():
 				print("calendar is empty")
 		current_event = calendar.next_event()
 	print_results()
+	print_results2()
 	print("Simulation finished")
 
 func handle_new_request():
@@ -61,13 +62,13 @@ func handle_new_request():
 	match servers.find_free_server(current_event.creation_time):
 		-1:
 			for r in requests:
-				r.b2_waiting_start_time = current_event.object
+				r.b2_waiting_start_time = current_event.creation_time
 			var aggregated_request = AggregatedRequest.new(requests)
 			b2.append(aggregated_request)
 			return
 		_:
 			for r in requests:
-				r.b2_waiting_start_time = current_event.object
+				r.b2_waiting_start_time = current_event.creation_time
 				r.match_start_time = current_event.creation_time
 			var aggregated_request = AggregatedRequest.new(requests)
 			servers.put_in_server(aggregated_request, current_event.creation_time)
@@ -92,3 +93,9 @@ func print_results() -> void:
 	for p in players:
 		count_avg_wait_time += p.get_avg_wait_time()
 	print(Time.get_time_string_from_unix_time(count_avg_wait_time / players.size()))
+
+func print_results2() -> void:
+	var sum_b2_avg_wait_time = 0
+	for p in players:
+		sum_b2_avg_wait_time += p.get_b2_avg_wait_time()
+	print(Time.get_time_string_from_unix_time(sum_b2_avg_wait_time / players.size()))
