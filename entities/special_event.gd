@@ -17,8 +17,8 @@ var status: EVENT_STATUS
 
 var object
 
-func _init(time: String, t: EVENT_TYPE, s: EVENT_STATUS, obj) -> void:
+func _init(time: String, t: EVENT_TYPE, obj) -> void:
 	creation_time = time
 	type = t
-	status = s
+	status = EVENT_STATUS.UNHANDLED
 	object = obj

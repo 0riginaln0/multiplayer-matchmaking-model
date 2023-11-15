@@ -8,12 +8,15 @@ static var max_request_id: int = 0
 var request_id: int
 var player_id: int
 var creation_time: String
-var end_time: String
-var processing_time: String
+var match_start_time: String
+var match_end_time: String
+var waiting_time: String
+
+## оставить только creation_time, match_start_time, match_end_time
 
 func _init(id: int, time: String) -> void:
 	player_id = id
-	creation_time = time #Time.get_datetime_string_from_system()
+	creation_time = time
 	request_id = max_request_id
 	max_request_id += 1
 
@@ -23,13 +26,13 @@ func _ready() -> void:
 
 func _to_string() -> String:
 	return str("Request: ", request_id," by player: ", player_id,
-	"\n", creation_time, "\n", end_time, "\n", processing_time)
+	"\n", creation_time, "\n", match_end_time, "\n", waiting_time)
 
 func set_handled() -> void:
-	end_time = Time.get_datetime_string_from_system()
-	var t_start = Time.get_unix_time_from_datetime_string(creation_time)
-	var t_end = Time.get_unix_time_from_datetime_string(end_time)
-	processing_time = str((t_end - t_start))
+	var cr_t := Time.get_unix_time_from_datetime_string(creation_time)
+	var match_start_t := Time.get_unix_time_from_datetime_string(match_start_time)
+	var unix_waiting_time := match_start_t - cr_t
+	waiting_time = Time.get_datetime_string_from_unix_time(unix_waiting_time)
 	emit_signal("request_handled")
 
 func get_creation_time() -> String:

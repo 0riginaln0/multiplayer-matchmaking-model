@@ -21,13 +21,12 @@ func _to_string() -> String:
 func create_new_request() -> void:
 	if request != null:
 		requests.append(request)
-	var next_request_time = calculate_next_request_time()
+	var next_request_time := calculate_next_request_time()
 	request = Request.new(player_id, next_request_time)
 	request.connect("request_handled", _on_request_handled)
-	var new_request: SpecialEvent = SpecialEvent.new(
-		next_request_time, SpecialEvent.EVENT_TYPE.NEW_REQUEST, 
-		SpecialEvent.EVENT_STATUS.UNHANDLED, request)
-	calendar.append(new_request)
+	var new_request_event: SpecialEvent = SpecialEvent.new(
+		next_request_time, SpecialEvent.EVENT_TYPE.NEW_REQUEST, request)
+	calendar.append(new_request_event)
 	
 
 func calculate_next_request_time() -> String:
@@ -36,8 +35,8 @@ func calculate_next_request_time() -> String:
 		var delta_t = Time.get_unix_time_from_datetime_string("0:2:00")
 		var next_request_time = Time.get_datetime_string_from_unix_time(seed_time + delta_t)
 		return next_request_time
-	var seed_t = Time.get_unix_time_from_datetime_string(request.end_time)
-	var delta_t = Time.get_unix_time_from_datetime_string("0:2:00")
+	var seed_t = Time.get_unix_time_from_datetime_string(request.match_end_time)
+	var delta_t = Time.get_unix_time_from_datetime_string("0:3:00")
 	var next_request_time = Time.get_datetime_string_from_unix_time(seed_t + delta_t)
 	return next_request_time
 

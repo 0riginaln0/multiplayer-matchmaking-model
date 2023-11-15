@@ -30,19 +30,21 @@ func handle_new_request():
 	var requests: Array[Request] = []
 	for i in range(GlobalVariables.PLAYERS_IN_MATCH):
 		requests.append(b1.pop_front())
-	var aggregated_request = AggregatedRequest.new(requests)
 	match servers.find_free_server():
 		-1:
+			var aggregated_request = AggregatedRequest.new(requests)
 			b2.append(aggregated_request)
 			return
 		_:
+			for r in requests:
+				r.match_start_time = current_event.creation_time
+			var aggregated_request = AggregatedRequest.new(requests)
 			servers.put_in_server(aggregated_request)
 
 func handle_idle_server():
 	if b2.is_empty():
 		# фиксировать простой прибора
 		return
-		pass
 	var aggregated_request = b2.pop_front()
 	servers.put_in_server(aggregated_request)
 

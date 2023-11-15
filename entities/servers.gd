@@ -37,9 +37,13 @@ class Server:
 		status = ServerState.FREE
 		server_id = max_server_id
 		max_server_id += 1
-		
+
 	func run():
 		for request in players.requests:
+			var match_time = Time.get_unix_time_from_datetime_string(GlobalVariables.MATCH_TIME)
+			var match_start_time = Time.get_unix_time_from_datetime_string(request.match_start_time)
+			var match_end_time = Time.get_datetime_string_from_unix_time(match_start_time + match_time)
+			request.match_end_time = match_end_time
 			request.set_handled()
 		#создаём запись в календаре что сервер освободился
 		print(str("Server ", server_id, " is free"))
