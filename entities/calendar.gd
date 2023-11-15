@@ -21,7 +21,7 @@ func next_event() -> SpecialEvent:
 	return null
 
 func _to_string() -> String:
-	var output_string: String = ""
+	var output_string: String = "Calendar:"
 	for ev in calendar:
 		output_string += str("\n", ev.to_string(), "\n")
 	return output_string

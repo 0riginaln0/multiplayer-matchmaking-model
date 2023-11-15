@@ -24,23 +24,27 @@ func _init() -> void:
 
 func start():
 	print("Simulation started")
-	print("-----------------")
-	print(calendar.to_string())
+	#print("-----------------")
+	#print(calendar.to_string())
 	current_event = calendar.next_event()
 	while(not is_end_of_simulation()):
-		print("-----------------")
-		print(calendar.to_string())
+		#print(calendar.to_string())
+		#print(b1.to_string())
+		#print(b2.to_string())
+		print(servers.to_string())
+		#print("-----------------")
+		#print(calendar.to_string())
 		match current_event.type:
 			SpecialEvent.EVENT_TYPE.NEW_REQUEST:
 				handle_new_request()
 				current_event.status = SpecialEvent.EVENT_STATUS.HANDLED
-				print("-----------------")
-				print(calendar.to_string())
+				#print("-----------------")
+				#print(calendar.to_string())
 			SpecialEvent.EVENT_TYPE.IDLE_SERVER:
 				handle_idle_server()
 				current_event.status = SpecialEvent.EVENT_STATUS.HANDLED
-				print("-----------------")
-				print(calendar.to_string())
+				#print("-----------------")
+				#print(calendar.to_string())
 			_:
 				print("calendar is empty")
 		current_event = calendar.next_event()
@@ -50,7 +54,6 @@ func start():
 func handle_new_request():
 	b1.append(current_event.object)
 	if not b1.are_enough_requests():
-		print(b1.buffer.size())
 		return
 	var requests: Array[Request] = []
 	for i in range(GlobalVariables.PLAYERS_IN_MATCH):

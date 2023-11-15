@@ -5,8 +5,6 @@ enum ServerState {BUSY, FREE}
 
 var servers: Array[Server]
 
-
-
 func _init() -> void:
 	for i in range(GlobalVariables.SERVERS_COUNT):
 		var new_server = Server.new()
@@ -23,6 +21,12 @@ func put_in_server(_players: AggregatedRequest, current_time: String):
 	servers[serv_id].players = _players
 	servers[serv_id].run()
 
+func _to_string() -> String:
+	var output_string := "Servers:"
+	for s in servers:
+		output_string = str(output_string, "\n", s.to_string())
+	output_string = str(output_string, "\n")
+	return output_string
 
 class Server:
 	extends Resource
@@ -54,7 +58,7 @@ class Server:
 		calendar.append(idle_server_event)
 		for request in players.requests:
 			request.set_handled()
-		print(str("Server ", server_id, " is free"))
+		#print(str("Server ", server_id, " is free"))
 	
 	func _to_string() -> String:
-		return str("ServerId: ", server_id, "\n", "Busy until: ", busy_until)
+		return str("ServerId: ", server_id, "\nBusy until: ", busy_until)

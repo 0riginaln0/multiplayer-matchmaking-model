@@ -40,5 +40,6 @@ func _to_string() -> String:
 			_status = "HANDLED"
 		EVENT_STATUS.UNHANDLED:
 			_status = "UNHANDLED"
-	var output_string: String = str(_type, "id: ", id, "\n", creation_time, "\n", _status)
+	var output_string: String = str("Event id: ", id, "\nType: ", _type, 
+									"\n", creation_time, "\n", _status)
 	return output_string

@@ -1,6 +1,6 @@
 extends Node
 
-var PLAYERS_IN_MATCH: int = 4
+var PLAYERS_IN_MATCH: int = 2
 var SERVERS_COUNT: int = 2
 var PLAYERS_COUNT: int = 5
 var MATCH_TIME: String = "00:06:00"

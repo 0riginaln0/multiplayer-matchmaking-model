@@ -13,3 +13,10 @@ func append(req: Request):
 
 func pop_front() -> Request:
 	return buffer.pop_front()
+
+func _to_string() -> String:
+	var output_string := "Bufer1:"
+	for r in buffer:
+		output_string = str(output_string, "\n", r.to_string())
+	output_string = str(output_string, "\n")
+	return output_string

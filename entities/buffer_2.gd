@@ -11,3 +11,10 @@ func append(ag_req: AggregatedRequest):
 
 func pop_front() -> AggregatedRequest:
 	return buffer.pop_front()
+
+func _to_string() -> String:
+	var output_string := "Buffer2:"
+	for ag_req in buffer:
+		output_string = str(output_string, "\n", ag_req.to_string())
+	output_string = str(output_string, "\n")
+	return output_string

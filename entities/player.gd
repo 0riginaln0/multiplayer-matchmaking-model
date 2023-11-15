@@ -44,6 +44,6 @@ func get_current_request() -> Request:
 	return request
 
 func _on_request_handled() -> void:
-	print(str("I am player:", player_id,". And my request has been handled\n", request, "\n"))
+	#print(str("I am player:", player_id,". And my request has been handled\n", request, "\n"))
 	request.disconnect("request_handled", _on_request_handled)
 	create_new_request()
