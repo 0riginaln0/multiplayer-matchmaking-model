@@ -1,28 +1,33 @@
 class_name Simulator
 extends Node
 
-var calendar: Calendar = Calendar.new()
-var b1: Buffer1 = Buffer1.new()
-var b2: Buffer2 = Buffer2.new()
-var servers: Servers = Servers.new()
-var players: Array[Player] = []
+var calendar: Calendar
+var b1: Buffer1
+var b2: Buffer2
+var servers: Servers
+var players: Array[Player]
 
 var current_event: SpecialEvent
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	# Запустить всех игроков и севрера
-	
+func _init() -> void:
+	calendar = Calendar.new()
+	b1 = Buffer1.new()
+	b2 = Buffer2.new()
+	servers = Servers.new()
+	players = []
+	# Запустить всех игроков
 	for i in range(GlobalVariables.PLAYERS_COUNT):
 		var new_player := Player.new()
+		new_player.create_new_request()
 		players.append(new_player)
-	pass
 
 func start():
 	print("Simulation started")
+	print(calendar.to_string())
+	current_event = calendar.next_event()
 	while(not is_end_of_simulation()):
-		current_event = calendar.next_event()
-		match current_event.EVENT_TYPE:
+		match current_event.type:
 			SpecialEvent.EVENT_TYPE.NEW_REQUEST:
 				handle_new_request()
 				current_event.status = SpecialEvent.EVENT_STATUS.HANDLED
@@ -31,6 +36,7 @@ func start():
 				current_event.status = SpecialEvent.EVENT_STATUS.HANDLED
 			_:
 				print("calendar is empty")
+	print_results()
 	print("Simulation finished")
 
 func handle_new_request():
@@ -62,3 +68,6 @@ func is_end_of_simulation() -> bool:
 	if GlobalVariables.SIMULATION_END_TIME < current_event.creation_time:
 		return true
 	return false
+
+func print_results() -> void:
+	pass

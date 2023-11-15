@@ -11,7 +11,6 @@ func _init() -> void:
 	for i in range(GlobalVariables.SERVERS_COUNT):
 		var new_server = Server.new()
 		servers.append(new_server)
-	
 
 func find_free_server(current_time: String) -> int:
 	for server in servers:

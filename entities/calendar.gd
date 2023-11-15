@@ -19,3 +19,9 @@ func next_event() -> SpecialEvent:
 		else:
 			continue
 	return null
+
+func _to_string() -> String:
+	var output_string: String = ""
+	for ev in calendar:
+		output_string += str("\n", ev.to_string(), "\n")
+	return output_string
