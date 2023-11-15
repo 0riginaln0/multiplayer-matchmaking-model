@@ -49,7 +49,6 @@ func start():
 				print("calendar is empty")
 		current_event = calendar.next_event()
 	print_results()
-	print_results2()
 	print("Simulation finished")
 
 func handle_new_request():
@@ -61,11 +60,14 @@ func handle_new_request():
 		requests.append(b1.pop_front())
 	match servers.find_free_server(current_event.creation_time):
 		-1:
+			for r in requests:
+				r.b2_waiting_start_time = current_event.object
 			var aggregated_request = AggregatedRequest.new(requests)
 			b2.append(aggregated_request)
 			return
 		_:
 			for r in requests:
+				r.b2_waiting_start_time = current_event.object
 				r.match_start_time = current_event.creation_time
 			var aggregated_request = AggregatedRequest.new(requests)
 			servers.put_in_server(aggregated_request, current_event.creation_time)
@@ -75,6 +77,9 @@ func handle_idle_server():
 		# фиксировать простой прибора
 		return
 	var aggregated_request = b2.pop_front()
+	var rqsts = aggregated_request.requests
+	for r in rqsts:
+		r.match_start_time = current_event.creation_time
 	servers.put_in_server(aggregated_request, current_event.creation_time)
 
 func is_end_of_simulation() -> bool:
@@ -87,10 +92,3 @@ func print_results() -> void:
 	for p in players:
 		count_avg_wait_time += p.get_avg_wait_time()
 	print(Time.get_time_string_from_unix_time(count_avg_wait_time / players.size()))
-
-func print_results2() -> void:
-	var sum_wait_time = 0
-	for p in players:
-		for r in p.requests:
-			sum_wait_time += Time.get_unix_time_from_datetime_string(r.waiting_time)
-	print(Time.get_time_string_from_unix_time(sum_wait_time / players.size()))

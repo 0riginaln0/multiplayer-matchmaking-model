@@ -11,6 +11,8 @@ var creation_time: String
 var match_start_time: String
 var match_end_time: String
 var waiting_time: String
+var b2_waiting_start_time: String
+# добавить время попадания в b2
 
 func _init(id: int, time: String) -> void:
 	player_id = id
