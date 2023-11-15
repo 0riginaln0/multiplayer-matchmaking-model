@@ -26,7 +26,7 @@ func set_handled() -> void:
 	var cr_t := Time.get_unix_time_from_datetime_string(creation_time)
 	var match_start_t := Time.get_unix_time_from_datetime_string(match_start_time)
 	var unix_waiting_time := match_start_t - cr_t
-	waiting_time = Time.get_datetime_string_from_unix_time(unix_waiting_time)
+	waiting_time = Time.get_time_string_from_unix_time(unix_waiting_time)
 	emit_signal("request_handled")
 
 func get_creation_time() -> String:

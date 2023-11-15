@@ -31,7 +31,7 @@ func start():
 		#print(calendar.to_string())
 		#print(b1.to_string())
 		#print(b2.to_string())
-		print(servers.to_string())
+		#print(servers.to_string())
 		#print("-----------------")
 		#print(calendar.to_string())
 		match current_event.type:
@@ -49,6 +49,7 @@ func start():
 				print("calendar is empty")
 		current_event = calendar.next_event()
 	print_results()
+	print_results2()
 	print("Simulation finished")
 
 func handle_new_request():
@@ -82,4 +83,14 @@ func is_end_of_simulation() -> bool:
 	return false
 
 func print_results() -> void:
-	pass
+	var count_avg_wait_time = 0
+	for p in players:
+		count_avg_wait_time += p.get_avg_wait_time()
+	print(Time.get_time_string_from_unix_time(count_avg_wait_time / players.size()))
+
+func print_results2() -> void:
+	var sum_wait_time = 0
+	for p in players:
+		for r in p.requests:
+			sum_wait_time += Time.get_unix_time_from_datetime_string(r.waiting_time)
+	print(Time.get_time_string_from_unix_time(sum_wait_time / players.size()))

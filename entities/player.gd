@@ -47,3 +47,9 @@ func _on_request_handled() -> void:
 	#print(str("I am player:", player_id,". And my request has been handled\n", request, "\n"))
 	request.disconnect("request_handled", _on_request_handled)
 	create_new_request()
+
+func get_avg_wait_time():
+	var sum_wait_time := 0.0
+	for r in requests:
+		sum_wait_time += Time.get_unix_time_from_datetime_string(r.waiting_time)
+	return sum_wait_time / requests.size()
