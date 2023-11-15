@@ -55,3 +55,6 @@ class Server:
 		for request in players.requests:
 			request.set_handled()
 		print(str("Server ", server_id, " is free"))
+	
+	func _to_string() -> String:
+		return str("ServerId: ", server_id, "\n", "Busy until: ", busy_until)
