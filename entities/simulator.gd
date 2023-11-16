@@ -48,7 +48,7 @@ func start():
 			_:
 				print("calendar is empty")
 		current_event = calendar.next_event()
-	print_results()
+	#print_results() - delete this function
 	print_results2()
 	print("Simulation finished")
 
@@ -88,14 +88,14 @@ func is_end_of_simulation() -> bool:
 		return true
 	return false
 
-func print_results() -> void:
-	var count_avg_wait_time = 0
-	for p in players:
-		count_avg_wait_time += p.get_avg_wait_time()
-	print(Time.get_time_string_from_unix_time(count_avg_wait_time / players.size()))
+#func print_results() -> void:
+#	var count_avg_wait_time = 0
+#	for p in players:
+#		count_avg_wait_time += p.get_avg_wait_time()
+#	print(Time.get_time_string_from_unix_time(count_avg_wait_time / players.size()))
 
 func print_results2() -> void:
 	var sum_b2_avg_wait_time = 0
 	for p in players:
 		sum_b2_avg_wait_time += p.get_b2_avg_wait_time()
-	print(Time.get_time_string_from_unix_time(sum_b2_avg_wait_time / players.size()))
+	print("Average waiting time: " + Time.get_time_string_from_unix_time(sum_b2_avg_wait_time / players.size()))
