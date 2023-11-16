@@ -7,12 +7,15 @@ var player_id: int
 var request: Request = null
 var requests: Array[Request]
 
+var behavior: Behavior
+
 var calendar: Calendar
 
 func _init() -> void:
 	player_id = max_player_id
 	max_player_id += 1
 	calendar = Calendar.new()
+	behavior = Behavior.new()
 
 
 func _to_string() -> String:
@@ -27,18 +30,6 @@ func create_new_request() -> void:
 	var new_request_event: SpecialEvent = SpecialEvent.new(
 		next_request_time, SpecialEvent.EVENT_TYPE.NEW_REQUEST, request)
 	calendar.append(new_request_event)
-	
-
-func calculate_next_request_time() -> String:
-	if request == null:
-		var seed_time = Time.get_unix_time_from_datetime_string(GlobalVariables.SIMULATION_START_TIME)
-		var delta_t = Time.get_unix_time_from_datetime_string("0:2:00")
-		var next_request_time = Time.get_datetime_string_from_unix_time(seed_time + delta_t)
-		return next_request_time
-	var seed_t = Time.get_unix_time_from_datetime_string(request.match_end_time)
-	var delta_t = Time.get_unix_time_from_datetime_string("0:3:00")
-	var next_request_time = Time.get_datetime_string_from_unix_time(seed_t + delta_t)
-	return next_request_time
 
 func get_current_request() -> Request:
 	return request
@@ -61,3 +52,23 @@ func get_b2_avg_wait_time():
 		var t_end = Time.get_unix_time_from_datetime_string(r.match_start_time)
 		sum_b2_wait_time += (t_end - t_start)
 	return sum_b2_wait_time
+
+
+#func calculate_next_request_time() -> String:
+#	if request == null:
+#		var seed_time = Time.get_unix_time_from_datetime_string(GlobalVariables.SIMULATION_START_TIME)
+#		var delta_t = Time.get_unix_time_from_datetime_string("0:2:00")
+#		var next_request_time = Time.get_datetime_string_from_unix_time(seed_time + delta_t)
+#		return next_request_time
+#	var seed_t = Time.get_unix_time_from_datetime_string(request.match_end_time)
+#	var delta_t = Time.get_unix_time_from_datetime_string("0:3:00")
+#	var next_request_time = Time.get_datetime_string_from_unix_time(seed_t + delta_t)
+#	return next_request_time
+	
+func calculate_next_request_time() -> String:
+	return behavior.calculate_next_request_datetime(request.match_end_time,
+									get_matches_played_per_day())
+
+func get_matches_played_per_day() -> int:
+	# Доделать
+	return 1
