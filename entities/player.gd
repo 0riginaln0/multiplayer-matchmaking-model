@@ -7,6 +7,9 @@ var player_id: int
 var request: Request = null
 var requests: Array[Request]
 
+var matches_played_per_day := 0
+var last_match_end_time := ""
+
 var behavior: Behavior
 
 var calendar: Calendar
@@ -36,6 +39,20 @@ func get_current_request() -> Request:
 
 func _on_request_handled() -> void:
 	#print(str("I am player:", player_id,". And my request has been handled\n", request, "\n"))
+	if requests.is_empty():
+		matches_played_per_day += 1
+	# взять дату, сравнить с другой датой, которую тоже надо взять
+	# Если дата lastmatchendtime такая же, как и request.matchendtime то matches_played_per_day += 1
+	else:
+		var current_date = request.match_end_time.get_slice("T", 0)
+		var last_date = last_match_end_time.get_slice("T", 0)
+		if current_date == last_date:
+			matches_played_per_day += 1
+		else:
+		# иначе, приравниваем к единице matches_played_per_day = 1
+			matches_played_per_day = 1
+	
+	last_match_end_time = request.match_end_time
 	request.disconnect("request_handled", _on_request_handled)
 	create_new_request()
 
@@ -66,9 +83,11 @@ func get_b2_avg_wait_time():
 #	return next_request_time
 	
 func calculate_next_request_time() -> String:
+	if request == null:
+		return behavior.calculate_next_request_datetime(GlobalVariables.SIMULATION_START_TIME,
+									get_matches_played_per_day())
 	return behavior.calculate_next_request_datetime(request.match_end_time,
 									get_matches_played_per_day())
 
 func get_matches_played_per_day() -> int:
-	# Доделать
-	return 1
+	return matches_played_per_day
